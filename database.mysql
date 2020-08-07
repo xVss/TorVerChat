@@ -1,0 +1,14 @@
+CREATE USER 'TVServer'@'localhost' IDENTIFIED BY 'Guala';
+
+CREATE DATABASE TorVerChat;
+
+GRANT ALL PRIVILEGES ON TorVerChat.* TO 'TVServer'@'localhost' WITH GRANT OPTION;
+
+USE TorVerChat;
+
+CREATE TABLE user(
+  Nome VARCHAR(20),
+  Password VARCHAR(20) DEFAULT 'password',
+  DataIscrizione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(Nome)
+) ENGINE = InnoDB;
