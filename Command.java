@@ -34,6 +34,12 @@ public class Command implements Serializable {
             case "SEND":
                 this.type = Tipo.SEND;
                 break;
+            case "OK":
+                this.type = Tipo.OK;
+                break;
+            case "ERR":
+                this.type = Tipo.ERR;
+                break;
             default:
                 this.type = Tipo.NaC;
                 break;
@@ -58,10 +64,14 @@ public class Command implements Serializable {
                 return this.campi.get("ROOM"); 
             case "SEND":
                 return this.campi.get("FROM") + "\n" + this.campi.get("DATE") + "\n" +this.campi.get("MSG");
+            case "OK":
+                return "OK";
+            case "ERR":
+                return "ERR";
             }
         return "Not a Command";
     }
 }
 
-enum Tipo{ SIGN, LOG, OUT, EXIT, MKROOM, JOINROOM, LEAVEROOM, SEND, ROOMNOTEXIST, NaC}
+enum Tipo{ SIGN, LOG, OUT, EXIT, MKROOM, JOINROOM, LEAVEROOM, SEND, ROOMNOTEXIST, NaC, OK, ERR}
 

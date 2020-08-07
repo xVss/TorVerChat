@@ -40,13 +40,13 @@ public class TVClient {
         System.out.println("Digita un comando oppure digita \"help\" per aiuto.");
 
 
-        String CMD = "";
+        String keybord = "";
         String MSG = "";
         
-        while( ! CMD.equals("EXIT") ) {
-            CMD = tastiera.readLine().toUpperCase();
+        while( ! keybord.equals("EXIT") ) {
+            keybord = tastiera.readLine().toUpperCase();
             
-            switch( CMD ){
+            switch( keybord ){
 
                 case "LOG":
                     cmd = TVClient.LOGIN();
@@ -58,6 +58,8 @@ public class TVClient {
                     cmd = TVClient.SIGNIN();
                     outStream.writeObject( cmd );
                     // TODO: tutto quello che succede dopo la registrazione
+                    cmd = (Command)inStream.readObject();
+                    System.out.println(cmd);
                     break;
                 
                 case "EXIT":

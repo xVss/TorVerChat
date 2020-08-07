@@ -4,6 +4,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.*;
+import java.sql.*;
 
 public class TVServer {
 
@@ -62,10 +63,30 @@ class ThreadConnessione implements Runnable {
     }
 
     public void run() {
+        Command CMD = new Command("NaC");
         try{
-            while(sock.isConnected()){
+            while( CMD.type.name() != "EXIT" ){
                 
-                Command CMD = (Command)inStream.readObject();
+                CMD = (Command)inStream.readObject();
+
+                switch( CMD.type.name() ){
+                    case "SIGN":
+                        //avvia fase di registrazione
+                        String user = CMD.campi.get("USR");
+                        String pass = CMD.campi.get("PSW");
+                        if(SIGN(user, pass)) outStream.writeObject(new Command("OK"));
+                        else outStream.writeObject(new Command("ERR"));
+                        break;
+                    case "LOG":
+                        //avvia fase di acceso
+                        break;
+                    case "EXIT":
+                        //esce
+                        break;
+                    default:
+                        //Non faccio niente
+                        break;
+                    }
 
                 System.out.println( "Comando " + CMD.type.name() + " ricevuto da  " + sock.getInetAddress() );
 
@@ -78,6 +99,26 @@ class ThreadConnessione implements Runnable {
 
         } catch(Exception e) {
             TVServer.utentiConnessi.remove( sock.getInetAddress().toString() );
+        }
+    }
+
+
+    public boolean SIGN(String user,String pass){
+        try {
+            String connectionString = "jdbc:mysql://localhost:3306/TorVerChat?user=root&password=Jackbiscotto1995";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection db = DriverManager.getConnection(connectionString);
+            PreparedStatement insert = db.prepareStatement("insert into user(Nome,Password) values (?, ?)");
+            insert.setString(1, user);
+            insert.setString(2, pass);
+            insert.execute();
+            db.close();
+            return true;
+        } catch (Exception e) {
+            //TODO: handle exception
+            System.out.println("Qualche Errore".toUpperCase());
+            System.out.println(e);
+            return false;
         }
     }
 
