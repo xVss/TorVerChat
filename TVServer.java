@@ -105,7 +105,7 @@ class ThreadConnessione implements Runnable {
 
     public boolean SIGN(String user,String pass){
         try {
-            String connectionString = "jdbc:mysql://localhost:3306/TorVerChat?user=root&password=Jackbiscotto1995";
+            String connectionString = "jdbc:mysql://localhost:3306/TorVerChat?user=TVServer&password=Guala";
             Class.forName("com.mysql.jdbc.Driver");
             Connection db = DriverManager.getConnection(connectionString);
             PreparedStatement insert = db.prepareStatement("insert into user(Nome,Password) values (?, ?)");
