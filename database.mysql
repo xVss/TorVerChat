@@ -12,3 +12,13 @@ CREATE TABLE user(
   DataIscrizione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(Nome)
 ) ENGINE = InnoDB;
+
+create table room( 
+  Nome varchar(20), 
+  Password varchar(20) default '', 
+  DataIscrizione timestamp default CURRENT_TIMESTAMP, 
+  Creatore varchar(20), 
+  LimiteUtenti int default -1, 
+  primary key(Nome), 
+  foreign key(Creatore) references user(Nome) 
+) engine = innodb;
