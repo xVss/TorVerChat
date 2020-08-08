@@ -57,7 +57,7 @@ public class Command implements Serializable {
             case "EXIT":
                 return this.campi.get("USR");
             case "MKROOM":
-                return this.campi.get("ROOM");
+                return this.campi.get("ROOM") + "\n" + this.campi.get("PSW");
             case "JOINROOM":
                 return this.campi.get("ROOM");
             case "LEAVEROOM":
